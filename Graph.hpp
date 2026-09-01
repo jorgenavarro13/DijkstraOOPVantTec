@@ -33,9 +33,10 @@ class Graph {
 
         // Reading the input from static files for demonstration
         vector<vector<int>> readWeightedGraphFile();
-        vector<vector<int>> readWeightedGraphFile();
+        vector<vector<int>> readUnweightedGraphFile();
 
-        void findRoute();
+        void fillGraphFromFile(vector<vector<int>> connections);
+       // void findRoute();
         
         private:
         void dijkstra();
