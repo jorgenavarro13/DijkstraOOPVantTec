@@ -8,6 +8,17 @@ using namespace std;
     The implementation takes in consideration a weighted and directed graph
 */
 
+
+struct CompareNodeWeight {
+    bool operator()(Node& n1, Node& n2) {
+        return n1.getWeight() > n2.getWeight(); // Min-heap
+    }
+};
+
+/* This data structure is necessary because of the use of a custom of 
+a priority queue, allowing the comparison between nodes possible
+*/
+
 class Graph {
     public:
         Graph(){};
@@ -40,7 +51,7 @@ class Graph {
         void findRoute();
         
         private:
-        int dijkstra();
+        unordered_map<int,int> dijkstra();
         unordered_map<int, vector<Node> > graph; 
         int begin;
         int end;  // By default we select the lower v for begin and the higher for end

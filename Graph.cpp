@@ -146,18 +146,60 @@ void Graph::fillGraph(vector<vector<int>> connections){
     int elements_per_connection = connections[0].size();
     for(vector<int> connection : connections){
         int u = connection[0];
+        int v = connection[1];
         graph[u].push_back( (elements_per_connection==3) ? Node(connection[1], connection[2]) : Node(connection[1]) ); 
+        if(graph.find(v)==graph.end()) {graph[v];}
     }
 }
 
-int Graph::dijkstra(){
-    cout<<"dijkstra"<<endl;
-    return 1;
+unordered_map<int,int>  Graph::dijkstra(){
+    
+    int V = graph.size();
+    priority_queue <Node, vector<Node>, CompareNodeWeight> pq;
+
+    unordered_map<int,int> dist;
+    for(auto it=graph.begin(); it!=graph.end();it++){
+        dist[it->first] = INT_MAX;
+        vector<Node> connections = it->second;
+        for(Node n : connections ){
+            dist[n.getValue()] = INT_MAX;
+        }
+    }
+
+    dist[begin]=0;
+    pq.emplace(Node(begin,0));
+
+    while(!pq.empty()){
+        auto top=pq.top();
+        pq.pop();
+
+        int u = top.getValue(); // u->current node
+        int d = top.getWeight(); // d->distance to that node
+
+        if(d > dist[u]) continue;
+
+        for(Node p : graph[u]){
+            int v = p.getValue();
+            int w = p.getWeight();
+            
+            if(dist[u]+ w < dist[v]){
+                dist[v] = dist[u] + w;
+                pq.emplace(Node(v,w));
+            }
+        }
+    }
+    return dist;
 }
 
 void Graph::findRoute(){
     cout<<"Calculating the route..."<<endl;
-    int result = dijkstra();
+    unordered_map<int,int> distances = dijkstra();
+    /*
+    for(auto it=distances.begin(); it!=distances.end();it++){
+        cout<<it->first<<"  ->"<<it->second<<endl;
+    }
+    */
+    int result = distances[end];
     cout<< "The path between "<<begin<<" and "<<end << ((result == INT_MAX) ? "doesn´t exist" : "exists")<<endl;
     if(result!=INT_MAX) cout<< " and the cost is "<<result<<endl;
 }
