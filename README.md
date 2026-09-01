@@ -32,11 +32,12 @@ cd
 
 On Windows:
 ```
-./launch.bat
+chmod +x ./launch.sh && ./launch.bat
 ```
 
 On Unix like OS:
 ```
+ch
 ./launch.sh
 ```
 

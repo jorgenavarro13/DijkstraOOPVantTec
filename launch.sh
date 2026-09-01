@@ -1,0 +1,1 @@
+clear && g++ main.cpp Graph.cpp Node.cpp -o Output.exe && ./Output.exe
