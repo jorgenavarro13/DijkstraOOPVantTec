@@ -9,12 +9,12 @@ class Node{
     public:
         Node(int v, int w); // For weighted graphs
         Node(int v); // For unweighted graphs
+        ~Node()=default;
 
         // Accessing the elements of the node as the attributes are private
         int getWeight();
         int getValue();
         pair<int,int> getNode();
-        ~Node();
 
     private:
         int V; // Value of the node, identifier

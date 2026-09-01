@@ -10,7 +10,7 @@ using namespace std;
 
 class Graph {
     public:
-        Graph(vector<vector<int>> & connections); 
+        Graph(){};
         /*
 
         The construction of the graph based on a vector with the nodes, edges and weight uses this form
@@ -22,7 +22,7 @@ class Graph {
 
         */
 
-        ~Graph();
+        ~Graph()= default;
 
         void selectBeginning();
         void selectEnd();
@@ -32,14 +32,15 @@ class Graph {
         vector<vector<int>> fillUnweightedGraph();
 
         // Reading the input from static files for demonstration
-        vector<vector<int>> readWeightedGraphFile();
-        vector<vector<int>> readUnweightedGraphFile();
+        vector<vector<int>> readWeightedGraphFile(string file_route);
+        vector<vector<int>> readUnweightedGraphFile(string file_route);
 
-        void fillGraphFromFile(vector<vector<int>> connections);
-       // void findRoute();
+        void fillGraph(vector<vector<int>> connections);
+
+        void findRoute();
         
         private:
-        void dijkstra();
+        int dijkstra();
         unordered_map<int, vector<Node> > graph; 
         int begin;
         int end;  // By default we select the lower v for begin and the higher for end

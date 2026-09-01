@@ -2,30 +2,11 @@
 #include "./Graph.hpp"
 using namespace std;
 
-Graph::Graph(vector<vector<int>> & connections){
-    int t_begin, t_end;
-    for(vector<int> connection : connections){
-        int u = connection[0];
-        int v = connection[1];
-        int w = connection[2];
-
-        Node temp(v,w);
-        graph[i].push_back(temp);
-        
-        t_begin=min(t_begin,min(u,v));
-        t_end=max(t_end,max(u,v));
-    }
-    begin = t_begin;
-    end = t_end;
-}
-
-
-
-void Graph::selectBeggining(){
+void Graph::selectBeginning(){
     cout<<"Select the beggining of the map, this node represents the beggining of the search for the other nodes"<<endl;
     cout<<"Your options are the following ones:"<<endl;
     for(auto it=graph.begin(); it!=graph.end(); it++){
-        cout<<graph->first<<", ";
+        cout<<it->first<<", ";
     }
     cout<<"\nSelect one of them by typing the number, (ex: 1)):\n";
     
@@ -42,11 +23,11 @@ void Graph::selectBeggining(){
     cout<<"The beggining of your graph was succesfully updated"<<endl;
 }
 
-void Graph::selectBeggining(){
+void Graph::selectEnd(){
     cout<<"Select the end of the map, this node represents the final destination of the search"<<endl;
     cout<<"Your options are the following ones:"<<endl;
     for(auto it=graph.begin(); it!=graph.end(); it++){
-        cout<<graph->first<<", ";
+        cout<<it->first<<", ";
     }
     cout<<"\nSelect one of them by typing the number, (ex: 1)):\n";
     
@@ -94,7 +75,7 @@ vector<vector<int>> Graph::fillWeightedGraph(){
     return connections;
 }
 
-vector<vector<int>> Graph::fillWeightedGraph(){
+vector<vector<int>> Graph::fillUnweightedGraph(){
     cout<<"You are going to insert the map one connection at a time in the following format"<<endl;
     cout<<" u   v ,  where u is the source node, v is the target node"<<endl;
     cout<<"\n Note: The values must be positive integers for each (u,v)"<<endl;
@@ -132,9 +113,9 @@ vector<vector<int>> Graph::readWeightedGraphFile(string file_name){
     file >> lines;
     vector<vector<int>> connections;
     for(int i=0; i<lines; i++){
-        float u, v, w;
+        int u, v, w;
         file >> u; file>> v ; file >> w;
-        coordinates.emplace_back(u,v,w);
+        connections.push_back({u,v,w});
     }
     file.close();
     return connections;
@@ -148,23 +129,36 @@ vector<vector<int>> Graph::readUnweightedGraphFile(string file_name){
     file >> lines;
     vector<vector<int>> connections;
     for(int i=0; i<lines; i++){
-        float u, v;
+        int u, v;
         file >> u; file>> v ; 
-        coordinates.emplace_back(u,v);
+        connections.push_back({u,v});
     }
     file.close();
     return connections;
 }
 
-void Graph::fillGraphFromFile(vector<vector<int>> connections){
+void Graph::fillGraph(vector<vector<int>> connections){
     if(connections.size()==0){
-        cout<<"The file wasn't read correctly check if the route is correct"<<endl;
+        cout<<"The current input is empty, check it"<<endl;
         return;
     }
     
     int elements_per_connection = connections[0].size();
     for(vector<int> connection : connections){
         int u = connection[0];
-        graph[u] = (elements_per_connection==3) ? Node(connection[1], connection[2]) : Node(connection[1]); 
+        graph[u].push_back( (elements_per_connection==3) ? Node(connection[1], connection[2]) : Node(connection[1]) ); 
     }
 }
+
+int Graph::dijkstra(){
+    cout<<"dijkstra"<<endl;
+    return 1;
+}
+
+void Graph::findRoute(){
+    cout<<"Calculating the route..."<<endl;
+    int result = dijkstra();
+    cout<< "The path between "<<begin<<" and "<<end << ((result == INT_MAX) ? "doesn´t exist" : "exists")<<endl;
+    if(result!=INT_MAX) cout<< " and the cost is "<<result<<endl;
+}
+
