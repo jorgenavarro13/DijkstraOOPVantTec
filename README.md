@@ -32,13 +32,12 @@ cd
 
 On Windows:
 ```
-chmod +x ./launch.sh && ./launch.bat
+  ./launch.bat
 ```
 
 On Unix like OS:
 ```
-ch
-./launch.sh
+chmod +x ./launch.sh && ./launch.sh
 ```
 
 By now, you should be able to see a terminal with the program running and asking for the input.
