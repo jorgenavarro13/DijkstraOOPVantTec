@@ -3,9 +3,31 @@
 using namespace std;
 
 namespace{
-    const  string inputs_folder = "./graphExamples/";
-    const  string unweightedExample = "unweightedGraph1.txt";
-    const  string weightedExample = "weightedGraph1.txt";
+    const string inputs_folder = "./graphExamples/";
+    const vector<string> weightedExamples = {
+        "weightedGraph1.txt",
+        "weightedGraph2_diamond.txt",
+        "weightedGraph3_disconnected.txt",
+        "weightedGraph4_dense.txt"
+    };
+    const vector<string> unweightedExamples = {
+        "unweightedGraph1.txt",
+        "unweightedGraph2_cycle.txt"
+    };
+}
+
+int chooseExample(const vector<string>& examples){
+    cout<<"Choose an example graph:"<<endl;
+    for(size_t i=0; i<examples.size(); i++){
+        cout<<i+1<<") "<<examples[i]<<endl;
+    }
+
+    int choice;
+    while (!(cin >> choice) || choice<1 || choice>(int)examples.size()) {
+        cout << "Error: No valid number, try again:\n";
+        cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return choice-1;
 }
 
 int main(){
@@ -29,14 +51,14 @@ int main(){
 
         switch(action){
             case 1:
-                connections = graph.readWeightedGraphFile(inputs_folder+weightedExample);
+                connections = graph.readWeightedGraphFile(inputs_folder+weightedExamples[chooseExample(weightedExamples)]);
                 graph.fillGraph(connections);
                 graph.selectBeginning();
                 graph.selectEnd();
                 graph.findRoute();
                 break;
             case 2:
-                connections = graph.readUnweightedGraphFile(inputs_folder+unweightedExample);
+                connections = graph.readUnweightedGraphFile(inputs_folder+unweightedExamples[chooseExample(unweightedExamples)]);
                 graph.fillGraph(connections);
                 graph.selectBeginning();
                 graph.selectEnd();
