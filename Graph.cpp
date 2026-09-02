@@ -167,6 +167,7 @@ unordered_map<int,int>  Graph::dijkstra(){
     }
 
     dist[begin]=0;
+    parent[begin]=begin; // marks the root so drawGraph knows where to stop walking back
     pq.emplace(Node(begin,0));
 
     while(!pq.empty()){
@@ -181,26 +182,57 @@ unordered_map<int,int>  Graph::dijkstra(){
         for(Node p : graph[u]){
             int v = p.getValue();
             int w = p.getWeight();
-            
+
             if(dist[u]+ w < dist[v]){
                 dist[v] = dist[u] + w;
-                pq.emplace(Node(v,w));
+                parent[v] = u; // best predecessor of v seen so far
+                pq.emplace(Node(v,dist[v]));
             }
         }
     }
     return dist;
 }
 
+void Graph::drawGraph(){
+    vector<int> path;
+    if(parent.find(end)!=parent.end()){
+        int current = end;
+        while(current != parent[current]){
+            path.push_back(current);
+            current = parent[current];
+        }
+        path.push_back(begin);
+        reverse(path.begin(), path.end());
+    }
+
+    set<pair<int,int>> pathEdges;
+    for(size_t i=0; i+1<path.size(); i++) pathEdges.insert({path[i], path[i+1]});
+
+    ofstream dot("route.dot");
+    dot << "digraph G {\n  rankdir=LR;\n";
+    for(auto& entry : graph){
+        int u = entry.first;
+        for(Node n : entry.second){
+            int v = n.getValue();
+            int w = n.getWeight();
+            bool onPath = pathEdges.count({u,v}) > 0;
+            dot << "  " << u << " -> " << v << " [label=\"" << w << "\"" << (onPath ? ", color=red, penwidth=2" : "") << "];\n";
+        }
+    }
+    for(int node : path) dot << "  " << node << " [style=filled, fillcolor=orange];\n";
+    dot << "}\n";
+    dot.close();
+
+    system("dot -Tpng route.dot -o route.png");
+    cout << "Graph image saved to route.png" << endl;
+}
+
 void Graph::findRoute(){
     cout<<"Calculating the route..."<<endl;
     unordered_map<int,int> distances = dijkstra();
-    /*
-    for(auto it=distances.begin(); it!=distances.end();it++){
-        cout<<it->first<<"  ->"<<it->second<<endl;
-    }
-    */
     int result = distances[end];
     cout<< "The path between "<<begin<<" and "<<end << ((result == INT_MAX) ? "doesn´t exist" : "exists")<<endl;
     if(result!=INT_MAX) cout<< " and the cost is "<<result<<endl;
+    drawGraph();
 }
 
