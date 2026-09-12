@@ -60,6 +60,15 @@ You will be able to choose between running an predefined example or just type an
 Follow the instructions to see the output, you have some inputs to experiment and see the result or you can construct your own graph :)
 
 
+## Live demo
+On this link you can access a video preview of how the behaviour of the program [here](https://drive.google.com/file/d/1JnAlxqJBUxaBSm5MyRD-BooOt8A26px9/view?usp=sharing)
+
+![Image of the graph formed and the commands in terminal](docs/preview.png)
+
+
+And the result: 
+![Image of result](docs/result.png)
+
 ### The process of though behind the algorithm
 1.- OOP  This repository was intentionally generated to put in practice several concepts of oriented object solutions,
 using different access specifiers to mantain the logic encapsulated
