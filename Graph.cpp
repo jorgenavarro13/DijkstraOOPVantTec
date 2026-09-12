@@ -89,8 +89,8 @@ vector<vector<int>> Graph::fillUnweightedGraph(){
     vector<vector<int>> connections;
 
     while(number--){
+        vector<int> temp;
         for(int i=0; i<2;i++){
-            vector<int> temp;
             int nu;
             while (!(cin >> nu) || nu<0) {
                 cout << "Error: No valid number, try again:\n";
@@ -231,7 +231,7 @@ void Graph::findRoute(){
     cout<<"Calculating the route..."<<endl;
     unordered_map<int,int> distances = dijkstra();
     int result = distances[end];
-    cout<< "The path between "<<begin<<" and "<<end << ((result == INT_MAX) ? "doesn´t exist" : "exists")<<endl;
+    cout<< "The path between "<<begin<<" and "<<end << ((result == INT_MAX) ? " doesn´t exist" : "exists")<<endl;
     if(result!=INT_MAX) cout<< " and the cost is "<<result<<endl;
     drawGraph();
 }

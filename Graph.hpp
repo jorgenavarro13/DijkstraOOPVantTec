@@ -49,6 +49,7 @@ class Graph {
         Method to encapsulate the logic regarding to the finding, reconstruction, generation of images when finding
         the path on a specific graph
         */
+        void drawGraph(); // Writes graph+route to route.dot and creates route.png via Graphviz
         
         private:
         unordered_map<int,int> dijkstra();
@@ -60,7 +61,6 @@ class Graph {
         */
 
 
-        void drawGraph(); // Writes graph+route to route.dot and creates route.png via Graphviz
         unordered_map<int, vector<Node> > graph;
         /*
         Here we store the connection that each node has with others in the graph, using a unordered map allow us to 

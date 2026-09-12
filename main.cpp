@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <cstdlib>
 #include "./Graph.hpp"
 using namespace std;
 
@@ -38,8 +39,9 @@ int main(){
         cout<<"\nWhat do you want to do?"<<endl;
         cout<<"1) Test a weighted graph"<<endl;
         cout<<"2) Test a unweighted graph"<<endl;
-        cout<<"3) Create my custom graph"<<endl;
-        cout<<"4) Exit"<<endl;
+        cout<<"3) Create my custom weighted graph"<<endl;
+        cout<<"4) Create my custom unweighted graph"<<endl;
+        cout<<"5) Exit"<<endl;
 
         while (!(cin >> action) || action < 1 || action >  5) {
                 cout << "Error: No valid number, try again:\n";
@@ -48,30 +50,43 @@ int main(){
 
         Graph graph;
         vector<vector<int>> connections;
+        int exampleIndex; 
 
         switch(action){
             case 1:
-                connections = graph.readWeightedGraphFile(inputs_folder+weightedExamples[chooseExample(weightedExamples)]);
+                exampleIndex = chooseExample(weightedExamples);
+                connections = graph.readWeightedGraphFile(inputs_folder+weightedExamples[exampleIndex]);
                 graph.fillGraph(connections);
+                graph.drawGraph();
+                system("xdg-open route.png");
                 graph.selectBeginning();
                 graph.selectEnd();
                 graph.findRoute();
                 break;
             case 2:
-                connections = graph.readUnweightedGraphFile(inputs_folder+unweightedExamples[chooseExample(unweightedExamples)]);
+                exampleIndex = chooseExample(unweightedExamples);
+                connections = graph.readUnweightedGraphFile(inputs_folder+unweightedExamples[exampleIndex]);
                 graph.fillGraph(connections);
+                graph.drawGraph();
+                system("xdg-open route.png");
                 graph.selectBeginning();
                 graph.selectEnd();
                 graph.findRoute();
                 break;
             case 3:
-                graph.fillWeightedGraph();
+                connections = graph.fillWeightedGraph();
+                graph.fillGraph(connections);
+                graph.drawGraph();
+                system("xdg-open route.png");
                 graph.selectBeginning();
                 graph.selectEnd();
                 graph.findRoute();
                 break;
             case 4: 
-                graph.fillUnweightedGraph();
+                connections = graph.fillUnweightedGraph();
+                graph.fillGraph(connections);
+                graph.drawGraph();
+                system("xdg-open route.png");
                 graph.selectBeginning();
                 graph.selectEnd();
                 graph.findRoute();
